@@ -1,16 +1,28 @@
-# flutter_application_66
 
-A new Flutter project.
+# Flutter Music Player 
 
-## Getting Started
+This app plays offline music present on your device.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Permission
+To access local storage of your device for:
+### Android
+Add this permission in AndroidManifest.xml    
+Path: android/app/src/main/AndroidManifest.xml
+```bash
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.project">
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+ <application>...
+```
+### IOS
+Add this permission in Info.plist  
+Path: ios/Runner/Info.plist
+```bash
+<key>NSPhotoLibraryUsageDescription</key>
+<string>This app requires to save your images user gallery</string>
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
