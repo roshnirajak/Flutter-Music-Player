@@ -17,18 +17,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FlutterPlay Songs',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'FlutterPlay Songs'),
+      debugShowCheckedModeBanner: false,
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const MyHomePage({
+    Key? key,
+    /*required this.title*/
+  }) : super(key: key);
+  //final String title;
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -417,12 +417,20 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 100,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-        //backgroundColor: bgColor,
+        title: const GradientText(
+          'GINGER',
+          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+          gradient: LinearGradient(colors: [
+            Color(0xFFFDC630),
+            Color(0xFFF37435),
+          ]),
+        ),
+
         elevation: 20,
-        backgroundColor: allColor,
+        backgroundColor: Colors.transparent,
       ),
       backgroundColor: allColor,
       body: FutureBuilder<List<SongModel>>(
@@ -458,23 +466,10 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (context, index) {
                 return Container(
                   margin:
-                      const EdgeInsets.only(top: 15.0, left: 12.0, right: 16.0),
-                  padding: const EdgeInsets.only(top: 30.0, bottom: 30),
+                      const EdgeInsets.only(top: 0.0, left: 12.0, right: 16.0),
+                  padding: const EdgeInsets.only(top: 2.0, bottom: 2),
                   decoration: BoxDecoration(
                     color: allColor,
-                    borderRadius: BorderRadius.circular(20.0),
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 4.0,
-                        offset: Offset(-4, -4),
-                        color: Colors.white24,
-                      ),
-                      BoxShadow(
-                        blurRadius: 4.0,
-                        offset: Offset(4, 4),
-                        color: Colors.black,
-                      ),
-                    ],
                   ),
                   child: ListTile(
                     textColor: Colors.white,
@@ -485,10 +480,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Colors.white60,
                       ),
                     ),
-                    trailing: const Icon(Icons.more_vert),
+                    //trailing: const Icon(Icons.more_vert),
                     leading: QueryArtworkWidget(
                       id: item.data![index].id,
                       type: ArtworkType.AUDIO,
+                      artworkBorder: BorderRadius.circular(0.0),
                     ),
                     onTap: () async {
                       //show the player view
@@ -618,6 +614,28 @@ Color getAverageColor(List<Color> colors) {
   return Color.fromRGBO(r, g, b, 1);
 }
 
+class GradientText extends StatelessWidget {
+  const GradientText(
+    this.text, {
+    required this.gradient,
+    this.style,
+  });
+
+  final String text;
+  final TextStyle? style;
+  final Gradient gradient;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      blendMode: BlendMode.srcIn,
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 0, 100, bounds.height),
+      ),
+      child: Text(text, style: style),
+    );
+  }
+}
 
 
 
