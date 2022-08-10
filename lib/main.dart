@@ -87,12 +87,17 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  Color allColor = Color.fromARGB(255, 26, 26, 26);
+  Color shadowColor = Color.fromARGB(255, 107, 107, 107);
+  Color blackColor = Color.fromARGB(255, 26, 26, 26);
+  Color whiteColor = Colors.white;
+  Color textColor = Colors.white;
+  //late Color currentColor;
+  Color currentColor = Colors.black;
   @override
   Widget build(BuildContext context) {
     if (isPlayerViewVisible) {
       return Scaffold(
-        backgroundColor: allColor,
+        backgroundColor: currentColor,
         body: SingleChildScrollView(
           child: Container(
             width: double.infinity,
@@ -102,8 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 //exit button and the song title
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //mainAxisSize: MainAxisSize.max,
                   children: [
                     Flexible(
                       child: InkWell(
@@ -111,11 +116,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             _changePlayerViewVisibility, //hides the player view
                         child: Container(
                           padding: const EdgeInsets.all(10.0),
-                          decoration: getDecoration(
-                              BoxShape.rectangle, const Offset(2, 2), 2.0, 0.0),
-                          child: const Icon(
+                          // decoration: getDecoration(
+                          //     BoxShape.rectangle, const Offset(2, 2), 2.0, 0.0),
+                          child: Icon(
                             Icons.arrow_back_ios_new,
-                            color: Colors.white70,
+                            color: textColor,
                           ),
                         ),
                       ),
@@ -123,10 +128,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     Flexible(
                       child: Text(
                         currentSongTitle,
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                        style: TextStyle(
+                          color: textColor,
+                          //fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       ),
                       flex: 5,
@@ -138,8 +143,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 Container(
                   width: 300,
                   height: 300,
-                  // decoration: getDecoration(
-                  //     BoxShape.rectangle, const Offset(0, 0), 0, 0),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: shadowColor,
+                        offset: const Offset(
+                          5.0,
+                          5.0,
+                        ),
+                        blurRadius: 10.0,
+                        spreadRadius: 2.0,
+                      ), //BoxShadow
+                      BoxShadow(
+                        color: shadowColor,
+                        offset: const Offset(0.0, 0.0),
+                        blurRadius: 0.0,
+                        spreadRadius: 0.0,
+                      ), //BoxShadow
+                    ],
+                  ),
                   margin: const EdgeInsets.only(top: 30, bottom: 30),
                   child: QueryArtworkWidget(
                     id: songs[currentIndex].id,
@@ -170,14 +192,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
                           return ProgressBar(
                             progress: progress,
+                            barCapShape: BarCapShape.square,
                             total: total,
                             barHeight: 4.0,
-                            baseBarColor: Color.fromARGB(68, 255, 255, 255),
-                            progressBarColor:
-                                Color.fromARGB(255, 255, 255, 255),
-                            thumbColor: Color.fromARGB(255, 255, 255, 255),
+                            baseBarColor: shadowColor,
+                            progressBarColor: textColor,
+                            thumbColor: textColor,
                             timeLabelTextStyle: const TextStyle(
-                              fontSize: 0,
+                              fontSize: 15,
                             ),
                             onSeek: (duration) {
                               _player.seek(duration);
@@ -188,40 +210,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
 
                     //position /progress and total text
-                    StreamBuilder<DurationState>(
-                      stream: _durationStateStream,
-                      builder: (context, snapshot) {
-                        final durationState = snapshot.data;
-                        final progress =
-                            durationState?.position ?? Duration.zero;
-                        final total = durationState?.total ?? Duration.zero;
-
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                progress.toString().split(".")[0],
-                                style: const TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              child: Text(
-                                total.toString().split(".")[0],
-                                style: const TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
                   ],
                 ),
 
@@ -244,12 +232,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             padding: const EdgeInsets.all(6.0),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
-                                border: Border.all(
-                                    width: 2,
-                                    color: Color.fromARGB(38, 255, 255, 255))),
-                            child: const Icon(
+                                border:
+                                    Border.all(width: 2, color: shadowColor)),
+                            child: Icon(
                               Icons.skip_previous,
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: textColor,
                               size: 30,
                             ),
                           ),
@@ -314,12 +301,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             padding: const EdgeInsets.all(6.0),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
-                                border: Border.all(
-                                    width: 2,
-                                    color: Color.fromARGB(38, 255, 255, 255))),
-                            child: const Icon(
+                                border:
+                                    Border.all(width: 2, color: shadowColor)),
+                            child: Icon(
                               Icons.skip_next,
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: textColor,
                               size: 30,
                             ),
                           ),
@@ -428,11 +414,25 @@ class _MyHomePageState extends State<MyHomePage> {
             Color(0xFFF37435),
           ]),
         ),
-
-        elevation: 20,
+        actions: [
+          IconButton(
+              onPressed: () {
+                if (currentColor == Colors.black) {
+                  currentColor = Colors.white;
+                  textColor = Colors.black;
+                  shadowColor = Color.fromARGB(255, 203, 203, 203);
+                } else {
+                  currentColor = Colors.black;
+                  textColor = Colors.white;
+                  shadowColor = Color.fromARGB(255, 91, 91, 91);
+                }
+              },
+              icon: Icon(Icons.dark_mode))
+        ],
+        elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      backgroundColor: allColor,
+      backgroundColor: currentColor,
       body: FutureBuilder<List<SongModel>>(
         //default values
         future: _audioQuery.querySongs(
@@ -469,15 +469,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       const EdgeInsets.only(top: 0.0, left: 12.0, right: 16.0),
                   padding: const EdgeInsets.only(top: 2.0, bottom: 2),
                   decoration: BoxDecoration(
-                    color: allColor,
+                    color: currentColor,
                   ),
                   child: ListTile(
-                    textColor: Colors.white,
+                    textColor: textColor,
                     title: Text(item.data![index].title),
                     subtitle: Text(
                       item.data![index].displayName,
-                      style: const TextStyle(
-                        color: Colors.white60,
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 132, 132, 132),
                       ),
                     ),
                     //trailing: const Icon(Icons.more_vert),
@@ -550,7 +550,7 @@ class _MyHomePageState extends State<MyHomePage> {
   BoxDecoration getDecoration(
       BoxShape shape, Offset offset, double blurRadius, double spreadRadius) {
     return BoxDecoration(
-      color: allColor,
+      color: blackColor,
       shape: shape,
       boxShadow: [
         BoxShadow(
@@ -573,7 +573,7 @@ class _MyHomePageState extends State<MyHomePage> {
       double blurRadius, double spreadRadius) {
     return BoxDecoration(
       borderRadius: borderRadius,
-      color: allColor,
+      color: blackColor,
       boxShadow: [
         BoxShadow(
           offset: -offset,
