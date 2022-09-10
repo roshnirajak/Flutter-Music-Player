@@ -162,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ), //BoxShadow
                     ],
                   ),
-                  margin: const EdgeInsets.only(top: 30, bottom: 30),
+                  margin: const EdgeInsets.only(top: 40, bottom: 30),
                   child: QueryArtworkWidget(
                     id: songs[currentIndex].id,
                     type: ArtworkType.AUDIO,
@@ -177,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Container(
                       padding: EdgeInsets.zero,
                       margin: const EdgeInsets.only(
-                          bottom: 4.0, left: 10, right: 10),
+                          bottom: 4.0, left: 10, right: 10, top: 30),
                       // decoration: getRectDecoration(BorderRadius.circular(0.0),
                       //     const Offset(0, 0), 1.0, 0.0),
 
@@ -427,7 +427,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   shadowColor = Color.fromARGB(255, 91, 91, 91);
                 }
               },
-              icon: Icon(Icons.dark_mode))
+              icon: Icon(
+                Icons.dark_mode,
+                color: textColor,
+              ))
         ],
         elevation: 0,
         backgroundColor: Colors.transparent,

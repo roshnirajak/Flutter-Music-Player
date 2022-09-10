@@ -1,9 +1,13 @@
 
-# Flutter Music Player 
+## Flutter Music Player 
 
 This app plays offline music present on your device.
 
-## Dependencies
+### Preview
+<img src="assets/Screenshot_1662842801.png">
+<img src="assets/Screenshot_1662842814.png">
+
+### Dependencies
 Dependencies used:
 ```bash
 dependencies:
@@ -13,9 +17,9 @@ dependencies:
 ```
 
 
-## Permission
+### Permission
 To access local storage of your device for:
-### Android
+#### Android
 Permission to be added in AndroidManifest.xml    
 Path: ```android/app/src/main/AndroidManifest.xml```
 ```bash
@@ -28,7 +32,7 @@ Path: ```android/app/src/main/AndroidManifest.xml```
 
  <application>...
 ```
-### IOS
+#### IOS
 Permission to be added in Info.plist  
 Path: ```ios/Runner/Info.plist```
 ```bash
