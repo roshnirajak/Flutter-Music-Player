@@ -4,8 +4,7 @@
 This app plays offline music present on your device.
 
 ### Preview
-<img src="assets/Screenshot_1662842801.png">
-<img src="assets/Screenshot_1662842814.png">
+<img src="assets/Screenshot_1662842801.png" height="500px"> <img src="assets/Screenshot_1662842814.png" height="500px">
 
 ### Dependencies
 Dependencies used:
