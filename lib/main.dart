@@ -115,12 +115,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         onTap:
                             _changePlayerViewVisibility, //hides the player view
                         child: Container(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.only(right: 10),
                           // decoration: getDecoration(
                           //     BoxShape.rectangle, const Offset(2, 2), 2.0, 0.0),
                           child: Icon(
                             Icons.arrow_back_ios_new,
                             color: textColor,
+                            size: 17,
                           ),
                         ),
                       ),
@@ -141,8 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 // artwork container
                 Container(
-                  width: 300,
-                  height: 300,
+                  width: 350,
+                  height: 350,
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -162,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ), //BoxShadow
                     ],
                   ),
-                  margin: const EdgeInsets.only(top: 40, bottom: 30),
+                  margin: const EdgeInsets.only(top: 30, bottom: 10),
                   child: QueryArtworkWidget(
                     id: songs[currentIndex].id,
                     type: ArtworkType.AUDIO,
@@ -173,11 +174,89 @@ class _MyHomePageState extends State<MyHomePage> {
                 //slider , position and duration widgets
                 Column(
                   children: [
+                    Container(
+                      margin: const EdgeInsets.only(),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          //go to playlist btn
+                          // Flexible(
+                          //   child: InkWell(
+                          //     onTap: () {
+                          //       _changePlayerViewVisibility();
+                          //     },
+                          //     child: Container(
+                          //       padding: const EdgeInsets.all(10.0),
+                          //       decoration: getDecoration(
+                          //           BoxShape.circle, const Offset(2, 2), 2.0, 0.0),
+                          //       child: const Icon(
+                          //         Icons.list_alt,
+                          //         color: Colors.white70,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+
+                          //shuffle playlist
+                          Flexible(
+                            child: InkWell(
+                              onTap: () {
+                                _player.setShuffleModeEnabled(true);
+                                toast(context, "Shuffling enabled");
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(10.0),
+                                // margin: const EdgeInsets.only(right: 30.0),
+                                // decoration: getDecoration(BoxShape.circle,
+                                //     const Offset(2, 2), 2.0, 0.0),
+                                child: Icon(
+                                  Icons.shuffle,
+                                  color: textColor,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          //repeat mode
+                          Flexible(
+                            child: InkWell(
+                              onTap: () {
+                                _player.loopMode == LoopMode.one
+                                    ? _player.setLoopMode(LoopMode.all)
+                                    : _player.setLoopMode(LoopMode.one);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(10.0),
+                                // decoration: getDecoration(BoxShape.circle,
+                                //     const Offset(2, 2), 2.0, 0.0),
+                                child: StreamBuilder<LoopMode>(
+                                  stream: _player.loopModeStream,
+                                  builder: (context, snapshot) {
+                                    final loopMode = snapshot.data;
+                                    if (LoopMode.one == loopMode) {
+                                      return Icon(
+                                        Icons.repeat_one,
+                                        color: textColor,
+                                      );
+                                    }
+                                    return Icon(
+                                      Icons.repeat,
+                                      color: textColor,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     //slider bar container
                     Container(
                       padding: EdgeInsets.zero,
                       margin: const EdgeInsets.only(
-                          bottom: 4.0, left: 10, right: 10, top: 30),
+                          bottom: 4.0, left: 10, right: 10, top: 20),
                       // decoration: getRectDecoration(BorderRadius.circular(0.0),
                       //     const Offset(0, 0), 1.0, 0.0),
 
@@ -198,8 +277,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             baseBarColor: shadowColor,
                             progressBarColor: textColor,
                             thumbColor: textColor,
-                            timeLabelTextStyle: const TextStyle(
+                            timeLabelTextStyle: TextStyle(
                               fontSize: 15,
+                              color: textColor,
                             ),
                             onSeek: (duration) {
                               _player.seek(duration);
@@ -215,7 +295,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 //prev, play/pause & seek next control buttons
                 Container(
-                  margin: const EdgeInsets.only(top: 20, bottom: 20),
+                  margin: const EdgeInsets.only(top: 15, bottom: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
@@ -230,10 +310,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                           child: Container(
                             padding: const EdgeInsets.all(6.0),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                border:
-                                    Border.all(width: 2, color: shadowColor)),
+                            // decoration: BoxDecoration(
+                            // borderRadius: BorderRadius.circular(50),
+                            // border:
+                            //     Border.all(width: 2, color: shadowColor)),
                             child: Icon(
                               Icons.skip_previous,
                               color: textColor,
@@ -299,10 +379,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                           child: Container(
                             padding: const EdgeInsets.all(6.0),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                border:
-                                    Border.all(width: 2, color: shadowColor)),
+                            // decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(50),
+                            //     border:
+                            //         Border.all(width: 2, color: shadowColor)),
                             child: Icon(
                               Icons.skip_next,
                               color: textColor,
@@ -316,85 +396,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
 
                 //go to playlist, shuffle , repeat all and repeat one control buttons
-                Container(
-                  margin: const EdgeInsets.only(top: 20, bottom: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      //go to playlist btn
-                      Flexible(
-                        child: InkWell(
-                          onTap: () {
-                            _changePlayerViewVisibility();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: getDecoration(
-                                BoxShape.circle, const Offset(2, 2), 2.0, 0.0),
-                            child: const Icon(
-                              Icons.list_alt,
-                              color: Colors.white70,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      //shuffle playlist
-                      Flexible(
-                        child: InkWell(
-                          onTap: () {
-                            _player.setShuffleModeEnabled(true);
-                            toast(context, "Shuffling enabled");
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10.0),
-                            margin:
-                                const EdgeInsets.only(right: 30.0, left: 30.0),
-                            decoration: getDecoration(
-                                BoxShape.circle, const Offset(2, 2), 2.0, 0.0),
-                            child: const Icon(
-                              Icons.shuffle,
-                              color: Colors.white70,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      //repeat mode
-                      Flexible(
-                        child: InkWell(
-                          onTap: () {
-                            _player.loopMode == LoopMode.one
-                                ? _player.setLoopMode(LoopMode.all)
-                                : _player.setLoopMode(LoopMode.one);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: getDecoration(
-                                BoxShape.circle, const Offset(2, 2), 2.0, 0.0),
-                            child: StreamBuilder<LoopMode>(
-                              stream: _player.loopModeStream,
-                              builder: (context, snapshot) {
-                                final loopMode = snapshot.data;
-                                if (LoopMode.one == loopMode) {
-                                  return const Icon(
-                                    Icons.repeat_one,
-                                    color: Colors.white70,
-                                  );
-                                }
-                                return const Icon(
-                                  Icons.repeat,
-                                  color: Colors.white70,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),
@@ -639,308 +640,3 @@ class GradientText extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:on_audio_query/on_audio_query.dart';
-
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'FlutterPlay Songs',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: const MyHomePage(title: 'FlutterPlay Songs'),
-//     );
-//   }
-// }
-
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({Key? key, required this.title}) : super(key: key);
-//   final String title;
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   // bg color
-//   Color bgColor = Colors.brown;
-
-//   //define on audio plugin
-//   final OnAudioQuery _audioQuery = OnAudioQuery();
-
-//   //request permission from initStateMethod
-//   @override
-//   void initState() {
-//     super.initState();
-//     requestStoragePermission();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         // Here we take the value from the MyHomePage object that was created by
-//         // the App.build method, and use it to set our appbar title.
-//         title: Text(widget.title),
-//         //backgroundColor: bgColor,
-//         elevation: 20,
-//         backgroundColor: bgColor,
-//       ),
-//       backgroundColor: bgColor,
-//       body: FutureBuilder<List<SongModel>>(
-//         //default values
-//         future: _audioQuery.querySongs(
-//           orderType: OrderType.ASC_OR_SMALLER,
-//           uriType: UriType.EXTERNAL,
-//           ignoreCase: true,
-//         ),
-//         builder: (context, item) {
-//           //loading content indicator
-//           if (item.data == null) {
-//             return const Center(
-//               child: CircularProgressIndicator(),
-//             );
-//           }
-//           //no songs found
-//           if (item.data!.isEmpty) {
-//             return const Center(
-//               child: Text("No Songs Found"),
-//             );
-//           }
-
-//           // You can use [item.data!] direct or you can create a list of songs as
-//           // List<SongModel> songs = item.data!;
-//           //showing the songs
-//           return ListView.builder(
-//               itemCount: item.data!.length,
-//               itemBuilder: (context, index) {
-//                 return Container(
-//                   margin:
-//                       const EdgeInsets.only(top: 15.0, left: 12.0, right: 16.0),
-//                   padding: const EdgeInsets.only(top: 30.0, bottom: 30),
-//                   decoration: BoxDecoration(
-//                     color: bgColor,
-//                     borderRadius: BorderRadius.circular(20.0),
-//                     boxShadow: const [
-//                       BoxShadow(
-//                         blurRadius: 4.0,
-//                         offset: Offset(-4, -4),
-//                         color: Colors.white24,
-//                       ),
-//                       BoxShadow(
-//                         blurRadius: 4.0,
-//                         offset: Offset(4, 4),
-//                         color: Colors.black,
-//                       ),
-//                     ],
-//                   ),
-//                   child: ListTile(
-//                     textColor: Colors.white,
-//                     title: Text(item.data![index].title),
-//                     subtitle: Text(
-//                       item.data![index].displayName,
-//                       style: const TextStyle(
-//                         color: Colors.white60,
-//                       ),
-//                     ),
-//                     trailing: const Icon(Icons.more_vert),
-//                     leading: QueryArtworkWidget(
-//                       id: item.data![index].id,
-//                       type: ArtworkType.AUDIO,
-//                     ),
-//                     onTap: () {
-//                       //toast message showing he selected song title
-//                       toast(context,
-//                           "You Selected:   " + item.data![index].title);
-//                     },
-//                   ),
-//                 );
-//               });
-//         },
-//       ),
-//     );
-//   }
-
-//   //define a toast method
-//   void toast(BuildContext context, String text) {
-//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//       content: Text(text),
-//       behavior: SnackBarBehavior.floating,
-//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
-//     ));
-//   }
-
-//   void requestStoragePermission() async {
-//     //only if the platform is not web, coz web have no permissions
-//     if (!kIsWeb) {
-//       bool permissionStatus = await _audioQuery.permissionsStatus();
-//       if (!permissionStatus) {
-//         await _audioQuery.permissionsRequest();
-//       }
-
-//       //ensure build method is called
-//       setState(() {});
-//     }
-//   }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import 'package:flutter/material.dart';
-// import 'dart:ui';
-
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         title: 'Flutter Demo',
-//         theme: ThemeData(
-//           primarySwatch: Colors.blue,
-//         ),
-//         debugShowCheckedModeBanner: false,
-//         home: MyHomePage());
-//   }
-// }
-
-// class MyHomePage extends StatelessWidget {
-//   const MyHomePage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         height: double.infinity,
-//         width: double.infinity,
-//         decoration: BoxDecoration(
-//           gradient: LinearGradient(
-//               begin: Alignment.topCenter,
-//               end: Alignment.bottomCenter,
-//               colors: [
-//                 Color.fromARGB(255, 58, 57, 99),
-//                 Color.fromARGB(255, 0, 0, 0)
-//               ]),
-//         ),
-//         child: Column(children: [
-//           //--Heading: Vanilla and Menu--//
-//           Container(
-//               padding: EdgeInsets.only(top: 40, left: 20, right: 20),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Text(
-//                     "Vanilla",
-//                     style: TextStyle(
-//                         fontSize: 32,
-//                         fontFamily: 'Vanilla',
-//                         color: Colors.white),
-//                   ),
-//                   IconButton(
-//                       onPressed: () {},
-//                       icon: Icon(
-//                         Icons.more_vert,
-//                         color: Colors.white,
-//                         size: 32,
-//                       ))
-//                 ],
-//               )),
-
-//           Divider(
-//             color: Color.fromARGB(100, 255, 255, 255),
-//           ),
-
-//           //--Scrollable Track list--//
-//           SingleChildScrollView(child: Stack(children:[Row(children: [],)])),
-
-//           ClipRect(
-//               child: Align(
-//             alignment: Alignment.bottomCenter,
-//             child: new BackdropFilter(
-//                 filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-//                 child: new Container(
-//                     width: double.infinity,
-//                     height: 60.0,
-//                     decoration: new BoxDecoration(
-//                         color: Color.fromARGB(0, 0, 0, 0).withOpacity(0.1)),
-//                     child: new Center(
-//                       child: new Text(
-//                         'Frosted',
-//                       ),
-//                     ))),
-//           ))
-//         ]),
-//       ),
-//     );
-//   }
-// }

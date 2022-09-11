@@ -4,7 +4,9 @@
 This app plays offline music present on your device.
 
 ### Preview
-<img src="assets/Screenshot_1662842801.png" height="500px"> <img src="assets/Screenshot_1662842814.png" height="500px">
+
+
+<img src="assets/Screenshot_lightmode1.png" height="500px"> <img src="assets/Screenshot_lightmode2.png" height="500px">
 
 ### Dependencies
 Dependencies used:
@@ -17,7 +19,10 @@ dependencies:
 
 
 ### Permission
-To access local storage of your device for:
+To access local storage of your device for: 
+
+Preview:<br>
+<img src="assets/Screenshot_permission.png" height="500px"> 
 #### Android
 Permission to be added in AndroidManifest.xml    
 Path: ```android/app/src/main/AndroidManifest.xml```
