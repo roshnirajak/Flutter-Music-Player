@@ -13,7 +13,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  // root widget
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -258,9 +258,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       margin: const EdgeInsets.only(
                           bottom: 4.0, left: 10, right: 10, top: 20),
                       // decoration: getRectDecoration(BorderRadius.circular(0.0),
-                      //     const Offset(0, 0), 1.0, 0.0),
+                      //const Offset(0, 0), 1.0, 0.0),
 
                       //slider bar duration state stream
+                      //progress bar of song
                       child: StreamBuilder<DurationState>(
                         stream: _durationStateStream,
                         builder: (context, snapshot) {
